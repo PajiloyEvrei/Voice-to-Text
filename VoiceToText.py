@@ -31,7 +31,6 @@ def Record(self):
 		keyb.write(f'{text.lower()}')
 
 
-root.iconbitmap(default="icon.png")
 root['bg']= 'black'
 root.title('Речь  --> Текст')
 root.wm_attributes('-alpha',1)
@@ -126,15 +125,15 @@ def DELautorun():
 
 label_Auto= Label(frame, text='Автозапуск',bg='white')
 label_Auto.grid(row=2,column=0)
-btn = Button(frame, text='ВКЛ', bg='#FAEBD7', width=4, height=1, command=autorun)
-btn.grid(row=2,column=1)
-btn = Button(frame, text='ВЫКЛ', bg='#FAEBD7', width=4, height=1, command=DELautorun)
-btn.grid(row=2,column=2)
+Abtn = Button(frame, text='ВКЛ', bg='#FAEBD7', width=4, height=1, command=autorun)
+Abtn.grid(row=2,column=1)
+Dbtn = Button(frame, text='ВЫКЛ', bg='#FAEBD7', width=4, height=1, command=DELautorun)
+Dbtn.grid(row=2,column=2)
 
 label_Lang= Label(frame, text='Язык',bg='white')
 label_Lang.grid(row=3,column=0)
-btn = Button(frame, text='RU', bg='#FAEBD7', width=4, height=1)
-btn.grid(row=3,column=1)
-btn = Button(frame, text='ENG', bg='#FAEBD7', width=4, height=1)
-btn.grid(row=3,column=2)
+Rbtn = Button(frame, text='RU', bg='#FAEBD7', width=4, height=1)
+Rbtn.grid(row=3,column=1)
+Ebtn = Button(frame, text='ENG', bg='#FAEBD7', width=4, height=1)
+Ebtn.grid(row=3,column=2)
 root.mainloop()
