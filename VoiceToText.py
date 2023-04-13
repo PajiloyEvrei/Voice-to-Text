@@ -13,6 +13,7 @@ FB = False
 SB = False
 ready = False
 Ready = False
+ASG = True
 root = Tk()
 
 p = pyaudio.PyAudio()
@@ -25,8 +26,7 @@ def listen():
 	query = r.recognize_google(audio, language = 'ru-RU')
 	return query.lower()
 
-def Record(self):
-	print(4) 
+def Record(self): 
 	for text in listen():
 		keyb.write(f'{text.lower()}')
 
@@ -49,7 +49,10 @@ Forbtn.grid(row=0,column=0)
 def NR():
 	global Ready
 	Ready = False
-	btn.configure(text='назначить', bg='#FAEBD7', command=Assign, width=10)
+	if ASG is True:
+		btn.configure(text='назначить', bg='#FAEBD7', command=Assign, width=10)
+	else:
+		btn.configure(text='assign', bg='#FAEBD7', command=Assign, width=10)
 	global ABTN
 	ABTN.pop(0)
 	if len(Forbtn.get()) == 2:
@@ -59,7 +62,6 @@ def NR():
 		root.bind(f'<KeyPress-{Forbtn.get()[3]}>', SB_pressed)
 		root.bind(f'<KeyRelease-{Forbtn.get()[1]}>', FB_released)
 		root.bind(f'<KeyRelease-{Forbtn.get()[3]}>', SB_released)
-	print(ABTN)
 def Check():
 	if FB is True and SB is True:
 		Record(1)
@@ -86,7 +88,6 @@ def onKeyPress(event):
 		Forbtn.insert("0",f'+{event.keysym}')
 		Forbtn.configure(state=DISABLED)
 		ABTN = Forbtn.get().split("+")
-		print(ABTN)
 		if len(Forbtn.get()) >= 4:
 			NR()
 def Assign():
@@ -100,7 +101,10 @@ def Assign():
 	Forbtn.configure(state=NORMAL)
 	Forbtn.delete("0", END)
 	Forbtn.configure(state=DISABLED)
-	btn.configure(text='подтвердить', bg='#FAEBD7', command=NR, width=10)
+	if ASG is True:
+		btn.configure(text='подтвердить', bg='#FAEBD7', command=NR, width=10)
+	else:
+		btn.configure(text='confirm', bg='#FAEBD7', command=NR, width=10)
 root.bind('<KeyPress>', onKeyPress)
 btn = Button(frame, text='назначить', bg='#FAEBD7', command=Assign, width=10)
 btn.grid(row=1,column=0,stick='we')
@@ -130,10 +134,27 @@ Abtn.grid(row=2,column=1)
 Dbtn = Button(frame, text='ВЫКЛ', bg='#FAEBD7', width=4, height=1, command=DELautorun)
 Dbtn.grid(row=2,column=2)
 
+def RU():
+	global ASG
+	Abtn.configure(text='ВКЛ')
+	Dbtn.configure(text='ВЫКЛ')
+	label_Lang.configure(text='Язык')
+	label_Auto.configure(text='Автозапуск')
+	btn.configure(text='назначить')
+	ASG = True
+def ENG():
+	global ASG
+	Abtn.configure(text='ON')
+	Dbtn.configure(text='OFF')
+	label_Lang.configure(text='Language')
+	label_Auto.configure(text='Autorun')
+	btn.configure(text='assign')
+	ASG = False
+
 label_Lang= Label(frame, text='Язык',bg='white')
 label_Lang.grid(row=3,column=0)
-Rbtn = Button(frame, text='RU', bg='#FAEBD7', width=4, height=1)
+Rbtn = Button(frame, text='RU', bg='#FAEBD7', width=4, height=1,command=RU)
 Rbtn.grid(row=3,column=1)
-Ebtn = Button(frame, text='ENG', bg='#FAEBD7', width=4, height=1)
+Ebtn = Button(frame, text='ENG', bg='#FAEBD7', width=4, height=1,command=ENG)
 Ebtn.grid(row=3,column=2)
 root.mainloop()
